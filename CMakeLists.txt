@@ -8,6 +8,16 @@ project(GPSTools
 set(CMAKE_CXX_STANDARD 23)
 set(CXX_STANDARD_REQUIRED ON)
 
+#
+include(FetchContent)
+set(FETCHCONTENT_QUIET FALSE)
+FetchContent_Declare(
+  googletest
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  GIT_TAG        v1.14.0)
+FetchContent_MakeAvailable(googletest)
+
+#
 add_library(GPSTools SHARED)
 target_sources(GPSTools
     PRIVATE
@@ -19,7 +29,7 @@ target_include_directories(GPSTools
   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
 
 #
-find_package(GTest REQUIRED)
+
 include(GoogleTest)
 
 add_executable(test_GPSTools)
@@ -35,7 +45,7 @@ target_include_directories(test_GPSTools
 
 target_link_libraries(
   test_GPSTools
-  GTest::gtest_main
+  gtest_main
 )
 
 
