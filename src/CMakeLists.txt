@@ -10,4 +10,3 @@ target_include_directories(GPSTools
     PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 )
-

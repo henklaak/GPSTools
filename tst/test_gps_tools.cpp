@@ -77,3 +77,17 @@ TEST(TestGpsTools, ComputePosition) {
   EXPECT_NEAR(tgt.latitude, 1.0, 0.005);
   EXPECT_NEAR(tgt.longitude, 1.0, 0.002);
 }
+
+/**************************************************************************************************/
+TEST(TestGpsTools, WGS84Radius) {
+  {
+    GpsTools::GpsPosition ref(0, 0);
+    auto r = GpsTools::wgs84_radius(ref);
+    EXPECT_NEAR(r, 6378137.0000, 0.001);
+  }
+  {
+    GpsTools::GpsPosition ref(90, 0);
+    auto r = GpsTools::wgs84_radius(ref);
+    EXPECT_NEAR(r, 6356752.3142, 0.001);
+  }
+}

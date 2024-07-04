@@ -88,3 +88,28 @@ void GpsTools::compute_from_pos_distance_bearing(GpsPosition reference,
   target.longitude = reference.longitude + dlon;
   target.latitude = reference.latitude + dlat;
 }
+
+/**************************************************************************************************/
+double GpsTools::wgs84_radius(GpsPosition position) {
+  // Radius at the equator
+  const double WGS84_SEMI_MAJOR = 6378137.0;
+  const double WGS84_INVERSE_FLATTENING = 298.257223563;
+
+  // Radius at the poles
+  const double WGS84_SEMI_MINOR =
+      WGS84_SEMI_MAJOR * (1 - 1 / WGS84_INVERSE_FLATTENING);
+
+  // Oblate spheroid
+  double a = WGS84_SEMI_MAJOR;
+  double b = WGS84_SEMI_MAJOR;
+  double c = WGS84_SEMI_MINOR;
+
+  double theta = degrees2radians(90 - position.latitude);
+  double phi = degrees2radians(position.longitude);
+
+  double x = a * sin(theta) * cos(phi);
+  double y = b * sin(theta) * sin(phi);
+  double z = c * cos(theta);
+
+  return sqrt(x * x + y * y + z * z);
+}
